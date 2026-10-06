@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-page: #FCFAEF;
+    --text-primary: #292827;
+    --text-name: #754640;
+    --text-role: #C99492;
+    --nav-bg: #3E4B79;
+    --ticker-bg: #DDE8FA;
+    --blue-section: #65C3F2;
+    --tile-radius: 6px;
+  }
+
+  body {
+    background-color: #FCFAEF;
+    color: #292827;
+    font-family: 'Satoshi', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+.font-editorial {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-sans-ui {
+  font-family: 'Satoshi', system-ui, -apple-system, sans-serif;
+}
+
+.font-pixelify {
+  font-family: 'Pixelify Sans', cursive, monospace, sans-serif;
+}
+
+/* Figma Glow for Nav Links on hover */
+.nav-text-glow {
+  text-shadow: 
+    0 0 6px rgba(255, 255, 255, 0.95),
+    0 0 14px rgba(255, 248, 205, 0.85),
+    0 0 24px rgba(255, 235, 160, 0.7);
+}
+
+/* Figma Glow for AP Logo on hover */
+.nav-logo-glow {
+  filter: 
+    drop-shadow(0 0 6px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 14px rgba(255, 240, 255, 0.85))
+    drop-shadow(0 0 22px rgba(215, 185, 255, 0.65));
+}
+
+/* Authentic Figma Floral Tile Pattern for Project Cards */
+.card-floral-pattern {
+  background-color: #274E99;
+  background-image: url('/assets/patterns/floral-blue-tile.svg');
+  background-repeat: repeat;
+  background-size: 28px 28px;
+}
+
+/* Authentic Figma Yellow Floral Tile Pattern for Project Card 2 (ASTRA) */
+.card-yellow-pattern {
+  background-color: #F3AF30;
+  background-image: url('/assets/patterns/floral-yellow-tile.svg');
+  background-repeat: repeat;
+  background-size: 28px 28px;
+}
+
+/* Authentic Figma Red Floral Tile Pattern for Project Card 3 (Samsung Iris) */
+.card-red-pattern {
+  background-color: #C13327;
+  background-image: url('/assets/patterns/floral-red-tile.svg');
+  background-repeat: repeat;
+  background-size: 28px 28px;
+}
+
+/* Subtle floating shadow for navbar */
+.nav-floating-shadow {
+  box-shadow: 0 12px 28px -4px rgba(32, 42, 74, 0.38), 0 3px 8px -2px rgba(32, 42, 74, 0.16);
+}
+
+.tile-shadow {
+  box-shadow: 0 4px 14px -2px rgba(35, 25, 20, 0.09), 0 1px 3px rgba(35, 25, 20, 0.05);
+}
+
+.tile-hover-shadow {
+  box-shadow: 0 12px 24px -4px rgba(35, 25, 20, 0.18), 0 4px 10px -1px rgba(35, 25, 20, 0.1);
+}
+
+/* Card hover animation */
+.project-card-transition {
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card-transition:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(40, 30, 25, 0.12), 0 4px 12px -2px rgba(40, 30, 25, 0.04);
+}
+
+@keyframes kf_571_36664_translate_0 {
+  0% {
+    transform: translateX(0px);
+    translate: 0px 0px;
+  }
+  100% {
+    transform: translateX(-1415px);
+    translate: -1415px 0px;
+  }
+}
+
+.animate-figma-marquee {
+  display: flex;
+  width: max-content;
+  animation: kf_571_36664_translate_0 22s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 24s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Rotating Inner Tile Elements */
+@keyframes spinTileSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinTileReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-spin-tile {
+  transform-box: fill-box;
+  transform-origin: 50px 50px;
+  animation: spinTileSlow 6s linear infinite;
+  will-change: transform;
+}
+
+.animate-spin-tile-reverse {
+  transform-box: fill-box;
+  transform-origin: 50px 50px;
+  animation: spinTileReverse 8s linear infinite;
+  will-change: transform;
+}
+
+/* Photo Marquee Continuous Constant Speed Animation (Images 1 to 18) */
+@keyframes photoMarqueeContinuous {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.photo-marquee-continuous-track {
+  display: flex;
+  width: max-content;
+  animation: photoMarqueeContinuous 48s linear infinite;
+  will-change: transform;
+}
+
+
+
+
