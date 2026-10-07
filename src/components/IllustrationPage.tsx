@@ -393,7 +393,7 @@ export const IllustrationPage: React.FC<IllustrationPageProps> = ({ onBack }) =>
       {/* 1. HEADER BANNER (Consistent with Graphic Design Header)  */}
       {/* Warm Butter-Cream Yellow with Akanksha's Decorative Tiles */}
       {/* ========================================================= */}
-      <header className="relative w-full bg-[#FCF9E8] pt-10 sm:pt-14 pb-12 sm:pb-16 px-4 sm:px-8 md:px-12 overflow-hidden border-b border-[#E8DFC2]">
+      <header className="relative w-full bg-[#FCF9E8] pt-20 sm:pt-24 pb-12 sm:pb-16 px-4 sm:px-8 md:px-12 overflow-hidden border-b border-[#E8DFC2]">
         {/* Navigation bar row */}
         <div className="w-full max-w-[1240px] mx-auto mb-6 sm:mb-8 flex items-center justify-between relative z-30">
           <button

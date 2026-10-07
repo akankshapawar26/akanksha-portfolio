@@ -4,7 +4,7 @@ export const AboutMe: React.FC = () => {
   return (
     <section
       id="about"
-      className="w-full bg-white select-none py-20 sm:py-28 lg:py-36 overflow-hidden"
+      className="w-full bg-white select-none py-20 sm:py-28 lg:py-36 overflow-hidden scroll-mt-16 sm:scroll-mt-24"
       style={{ backgroundColor: '#FFFFFF' }}
     >
       <div className="max-w-[1240px] mx-auto px-6 sm:px-10 lg:px-16 flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24">

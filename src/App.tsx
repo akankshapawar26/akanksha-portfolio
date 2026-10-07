@@ -38,17 +38,34 @@ export default function App() {
   const handleNavClick = (id: string) => {
     if (id === 'resume') {
       setIsResumeOpen(true);
+      return;
+    }
+    if (currentView !== 'home') {
+      handleBackToHome();
+      setTimeout(() => {
+        if (id === 'work') {
+          const el = document.getElementById('work');
+          el?.scrollIntoView({ behavior: 'smooth' });
+        } else if (id === 'about') {
+          const el = document.getElementById('about');
+          el?.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 60);
     }
   };
 
   const handleOpenGraphicDesign = () => {
     setCurrentView('graphic-design');
     window.location.hash = 'graphic-design';
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const handleOpenIllustration = () => {
     setCurrentView('illustration');
     window.location.hash = 'illustration';
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const handleBackToHome = () => {
@@ -56,13 +73,22 @@ export default function App() {
     if (window.location.hash === '#graphic-design' || window.location.hash === '#illustration') {
       window.history.pushState(null, '', window.location.pathname);
     }
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   // If user navigated directly or clicked Graphic Design
   if (currentView === 'graphic-design') {
     return (
-      <div className="relative min-h-screen w-full bg-[#FFFFE1] text-[#323131] overflow-x-hidden">
+      <div className="relative min-h-screen w-full bg-[#FFFFE1] text-[#323131] overflow-x-hidden flex flex-col items-center">
+        {/* Floating Navbar on Graphic Design Page */}
+        <Navbar onNavClick={handleNavClick} />
         <GraphicDesignPage onBack={handleBackToHome} />
+
+        {/* Interactive Modals */}
+        <ResumeModal
+          isOpen={isResumeOpen}
+          onClose={() => setIsResumeOpen(false)}
+        />
       </div>
     );
   }
@@ -70,8 +96,16 @@ export default function App() {
   // If user navigated directly or clicked Illustration
   if (currentView === 'illustration') {
     return (
-      <div className="relative min-h-screen w-full bg-[#EAE2D2] text-[#292827] overflow-x-hidden">
+      <div className="relative min-h-screen w-full bg-[#EAE2D2] text-[#292827] overflow-x-hidden flex flex-col items-center">
+        {/* Floating Navbar on Illustration Page */}
+        <Navbar onNavClick={handleNavClick} />
         <IllustrationPage onBack={handleBackToHome} />
+
+        {/* Interactive Modals */}
+        <ResumeModal
+          isOpen={isResumeOpen}
+          onClose={() => setIsResumeOpen(false)}
+        />
       </div>
     );
   }

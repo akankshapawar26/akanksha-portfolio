@@ -8,7 +8,7 @@ interface FeaturedWorkProps {
 
 export const FeaturedWork: React.FC<FeaturedWorkProps> = () => {
   return (
-    <section id="work" className="w-full bg-white select-none">
+    <section id="work" className="w-full bg-white select-none scroll-mt-16 sm:scroll-mt-24">
       <div
         className="w-full max-w-[1100px] mx-auto px-4 sm:px-6 pb-24 sm:pb-32"
         style={{ paddingTop: '145px' }}

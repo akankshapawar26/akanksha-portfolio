@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="740" viewBox="0 0 660 740" fill="none">
+  <defs>
+    <!-- Filter for Layer 1: Left Slanted Folder Flap -->
+    <filter id="filter_half_left_flap" x="0" y="20" width="250" height="710" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dx="3" dy="4"/>
+      <feGaussianBlur stdDeviation="3"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.28 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+
+    <!-- Linear Gradient for Left Flap -->
+    <linearGradient id="paint_half_left_flap" x1="152.5" y1="94.3223" x2="-64.9486" y2="532.551" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EECD91"/>
+      <stop offset="0.966346" stop-color="#BE8C32"/>
+      <stop offset="1" stop-color="#BC8A2E"/>
+    </linearGradient>
+
+    <!-- Filter for Layer 2: Left Paper in Perspective -->
+    <filter id="filter_half_paper" x="10" y="20" width="250" height="725" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dx="2" dy="-3"/>
+      <feGaussianBlur stdDeviation="3"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_paper"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_paper" result="shape"/>
+    </filter>
+
+    <!-- Linear Gradient for Left Paper -->
+    <linearGradient id="paint_half_paper" x1="240.723" y1="353.726" x2="55.3622" y2="344.238" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#A5A5A5"/>
+    </linearGradient>
+
+    <!-- Filter for Layer 4: Right Folder Flap -->
+    <filter id="filter_half_right_flap" x="220" y="90" width="430" height="550" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dx="4" dy="6"/>
+      <feGaussianBlur stdDeviation="4"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.28 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_right"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_right" result="shape"/>
+    </filter>
+
+    <!-- Linear Gradient for Right Flap -->
+    <linearGradient id="paint_half_right_flap" x1="106.492" y1="44" x2="297.492" y2="524" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ECDCBF"/>
+      <stop offset="1" stop-color="#D8A240"/>
+    </linearGradient>
+
+    <!-- Linear Gradient for Right Inside Page -->
+    <linearGradient id="paint_half_right_page" x1="381" y1="262" x2="0" y2="262" gradientUnits="userSpaceOnUse">
+      <stop offset="0.2115" stop-color="#ECECEC"/>
+      <stop offset="1" stop-color="#9E9E9E"/>
+    </linearGradient>
+
+    <!-- Drop Shadow for Right Inside Page -->
+    <filter id="filter_half_right_page_shadow" x="225" y="100" width="400" height="540" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- 1. RIGHT BACK FOLDER FLAP (Positioned on the right side) -->
+  <g transform="translate(230, 100)" filter="url(#filter_half_right_flap)">
+    <path d="M1 25C1 11.1929 12.1929 0 26 0H111.765C120.448 0 128.04 5.85274 130.25 14.25C132.46 22.6473 140.052 28.5 148.735 28.5H380C393.807 28.5 405 39.6929 405 53.5V499C405 512.807 393.807 524 380 524H26C12.1929 524 1 512.807 1 499V25Z" fill="url(#paint_half_right_flap)"/>
+  </g>
+
+  <!-- 2. RIGHT INSIDE PAGE (Layer 3) -->
+  <g transform="translate(242, 100)">
+    <rect width="381" height="524" rx="15" fill="url(#paint_half_right_page)" filter="url(#filter_half_right_page_shadow)"/>
+  </g>
+
+  <!-- 3. LEFT PERSPECTIVE PAPER (Layer 2) -->
+  <g transform="translate(18, 12)" filter="url(#filter_half_paper)">
+    <path d="M2.00105 116.992C2.00106 111.243 5.28668 106 10.4601 103.493L206.457 8.52068C216.419 3.69373 227.998 10.95 227.998 22.0194L228.001 694.063C228.001 704.641 217.347 711.896 207.504 708.019L11.5037 630.827C5.76966 628.569 2.00031 623.033 2.00032 616.871L2.00105 116.992Z" fill="url(#paint_half_paper)"/>
+  </g>
+
+  <!-- 4. LEFT FRONT PERSPECTIVE FLAP (Layer 1) -->
+  <g transform="translate(5, 20)" filter="url(#filter_half_left_flap)">
+    <path d="M1 95.2961C1 86.6125 5.5061 78.5508 12.9027 74.0015L65.7694 41.4859C72.2835 37.4793 80.6683 42.1661 80.6683 49.8137C80.6683 57.2439 88.6291 61.9586 95.1447 58.3871L195.983 3.11285C212.644 -6.01957 233 6.03604 233 25.0354V663.496C233 681.29 214.938 693.387 198.484 686.614L16.4838 611.696C7.1149 607.839 1 598.71 1 588.578V95.2961Z" fill="url(#paint_half_left_flap)"/>
+  </g>
+</svg>

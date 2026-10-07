@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface NavbarProps {
   onNavClick?: (item: string) => void;
@@ -8,6 +8,38 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onNavClick }) => {
   const [hovered, setHovered] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+
+          // Always visible at the very top
+          if (currentScrollY < 30) {
+            setIsVisible(true);
+          } else if (currentScrollY > lastScrollY && currentScrollY - lastScrollY > 4) {
+            // Scrolling DOWN -> smoothly hide
+            setIsVisible(false);
+          } else if (lastScrollY - currentScrollY > 3) {
+            // Scrolling UP even slightly -> immediately pop into view
+            setIsVisible(true);
+          }
+
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   const navLinks = [
     { label: 'Work', id: 'work', href: '#work' },
@@ -17,8 +49,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavClick }) => {
 
   return (
     <>
-      {/* 1. DESKTOP / TABLET NAVIGATION: Sticky Glassmorphic Pill Floating Above Content */}
-      <header className="hidden md:flex sticky top-0 z-50 w-full justify-center pt-3 sm:pt-4 pb-2 pointer-events-none">
+      {/* 1. DESKTOP / TABLET NAVIGATION: Smart Pop-Up Glassmorphic Pill */}
+      <header
+        className={`hidden md:flex fixed top-0 left-0 right-0 z-50 w-full justify-center pt-3 sm:pt-4 pb-2 pointer-events-none transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+        }`}
+      >
         <nav
           role="navigation"
           aria-label="Main Navigation"
@@ -41,7 +77,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavClick }) => {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              if (onNavClick) {
+                onNavClick('home');
+              } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
             }}
             onMouseEnter={() => setHovered('logo')}
             onMouseLeave={() => setHovered(null)}
@@ -96,14 +136,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavClick }) => {
         </nav>
       </header>
 
-      {/* 2. MOBILE NAVIGATION: Sticky Header Bar */}
-      <div className="md:hidden sticky top-0 z-50 w-full pointer-events-none">
-        <header className="w-full flex items-center justify-between px-5 pt-3 pb-2.5 bg-[#FCFAEF]/85 backdrop-blur-md border-b border-[#EBE4D5]/60 pointer-events-auto">
+      {/* 2. MOBILE NAVIGATION: Smart Pop-Up Header Bar */}
+      <div
+        className={`md:hidden fixed top-0 left-0 right-0 z-50 w-full pointer-events-none transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isVisible || mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+        }`}
+      >
+        <header className="w-full flex items-center justify-between px-5 pt-3 pb-2.5 bg-[#FCFAEF]/90 backdrop-blur-md border-b border-[#EBE4D5]/60 pointer-events-auto shadow-xs">
           <a
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              if (onNavClick) {
+                onNavClick('home');
+              } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
             }}
             className="flex items-center cursor-pointer"
             aria-label="Akanksha Pawar Home"
@@ -154,7 +202,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavClick }) => {
                       onNavClick?.('about');
                     }
                   }}
-                  className="font-sans-ui text-[18px] font-semibold text-white/95 hover:text-amber-200 transition-colors py-1 cursor-pointer"
+                  className="font-sans-ui text-lg font-medium text-white/90 hover:text-white"
                 >
                   {link.label}
                 </a>

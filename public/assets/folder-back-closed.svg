@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="560" viewBox="0 0 440 560" fill="none">
+  <defs>
+    <filter id="back_folder_shadow" x="0" y="0" width="440" height="560" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="6" dy="12" stdDeviation="8" flood-opacity="0.35"/>
+    </filter>
+
+    <linearGradient id="back_view_grad" x1="220" y1="20" x2="160" y2="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ECD4A7"/>
+      <stop offset="50%" stop-color="#E2BA73"/>
+      <stop offset="100%" stop-color="#CD9133"/>
+    </linearGradient>
+
+    <linearGradient id="front_under_grad" x1="200" y1="10" x2="160" y2="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E5C795"/>
+      <stop offset="100%" stop-color="#BE8229"/>
+    </linearGradient>
+  </defs>
+
+  <g filter="url(#back_folder_shadow)">
+    <!-- 1. UNDERNEATH FRONT FLAP (Tab on top-left) -->
+    <path d="M1 25C1 11.1929 12.1929 0 26 0H111.765C120.448 0 128.04 5.85274 130.25 14.25C132.46 22.6473 140.052 28.5 148.735 28.5H380C393.807 28.5 405 39.6929 405 53.5V499C405 512.807 393.807 524 380 524H26C12.1929 524 1 512.807 1 499V25Z" fill="url(#front_under_grad)" transform="translate(8, 14)"/>
+
+    <!-- 2. PEEKING WHITE PAPER SHEET (Upper Left) -->
+    <rect x="18" y="22" width="386" height="505" rx="16" fill="#FFFFFF"/>
+
+    <!-- 3. BACK FOLDER FLAP (Tab on top-right) -->
+    <path d="M405 25C405 11.1929 393.807 0 380 0H294.235C285.552 0 277.96 5.85274 275.75 14.25C273.54 22.6473 265.948 28.5 257.265 28.5H26C12.1929 28.5 1 39.6929 1 53.5V499C1 512.807 12.1929 524 26 524H380C393.807 524 405 512.807 405 499V25Z" fill="url(#back_view_grad)" transform="translate(18, 16)"/>
+  </g>
+</svg>

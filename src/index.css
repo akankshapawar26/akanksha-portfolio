@@ -12,6 +12,10 @@
     --tile-radius: 6px;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: #FCFAEF;
     color: #292827;
