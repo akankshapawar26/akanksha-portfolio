@@ -38,7 +38,7 @@ const CDJewelCase: React.FC<CDJewelCaseProps> = ({ title, renderArtwork, onClick
           perspective: '1200px',
         }}
       >
-        {/* Realistic Case Shadow onto Sky-Blue Surface */}
+        {/* Realistic Case Shadow onto #6EC8FF Sky-Blue Surface */}
         <div
           className="absolute inset-0 rounded-[4px] pointer-events-none transition-all duration-500"
           style={{
@@ -255,7 +255,7 @@ export const BeyondTheScreens: React.FC<BeyondTheScreensProps> = ({
   const centerY = flowerY + (111.102 - 32.768) / 2;
 
   return (
-    <section className="relative w-full bg-[#5CB4F8] flex flex-col justify-center items-center py-12 sm:py-16 pb-28 sm:pb-32 md:pb-36 px-4 sm:px-8 lg:px-12 overflow-hidden select-none">
+    <section className="relative w-full bg-[#6EC8FF] flex flex-col justify-center items-center pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 md:pb-24 px-4 sm:px-8 lg:px-12 overflow-hidden select-none">
       {/* 1. Top-Left 2x2 Decorative Corner Tiles */}
       <div
         className="absolute top-6 left-6 sm:top-8 sm:left-10 grid grid-cols-2 gap-2.5 sm:gap-3 pointer-events-none z-10"
@@ -278,9 +278,9 @@ export const BeyondTheScreens: React.FC<BeyondTheScreensProps> = ({
         <div className="w-[58px] h-[58px] sm:w-[76px] sm:h-[76px] bg-[#F8D082] rounded-[14px] sm:rounded-[16px] shadow-sm" />
       </div>
 
-      {/* 2. Bottom-Right Horizontal Decorative Tiles (Positioned safely below the cards with equal spacing) */}
+      {/* 2. Bottom-Right Horizontal Decorative Tiles (Positioned with 60px clearance from cards) */}
       <div
-        className="absolute bottom-5 sm:bottom-6 md:bottom-8 right-6 sm:right-10 md:right-12 lg:right-16 flex flex-row gap-2.5 sm:gap-3 pointer-events-none z-10"
+        className="absolute bottom-6 sm:bottom-8 md:bottom-10 right-6 sm:right-10 md:right-12 lg:right-16 flex flex-row gap-2.5 sm:gap-3 pointer-events-none z-10"
         aria-hidden="true"
       >
         {/* Solid Soft Pink Tile */}
@@ -292,17 +292,17 @@ export const BeyondTheScreens: React.FC<BeyondTheScreensProps> = ({
         </div>
       </div>
 
-      {/* 3. Main Section Container: Balanced vertical rhythm */}
+      {/* 3. Main Section Container: Balanced vertical rhythm with 60px clearance from tiles */}
       <div className="w-full max-w-[1240px] mx-auto flex flex-col items-center justify-center relative z-20">
-        {/* Section Heading: "Beyond the Screens" */}
-        <div className="w-full pt-32 sm:pt-4 lg:pt-0 sm:pl-[200px] md:pl-[220px] lg:pl-0 mb-8 sm:mb-10 lg:mb-12 flex justify-center sm:justify-end lg:justify-center">
+        {/* Section Heading: "Beyond the Screens" in White Color */}
+        <div className="w-full pt-32 sm:pt-4 md:pt-6 sm:pl-[200px] md:pl-[220px] lg:pl-0 mb-2 sm:mb-4 flex justify-center sm:justify-end lg:justify-center">
           <h2 className="font-editorial text-[38px] sm:text-[44px] md:text-[50px] lg:text-[56px] font-bold text-white tracking-[-0.015em] drop-shadow-sm text-center sm:text-right lg:text-center">
             Beyond the Screens
           </h2>
         </div>
 
-        {/* 4. Two Interactive CD Jewel Cases */}
-        <div className="w-full flex flex-col md:flex-row items-center justify-center gap-10 sm:gap-14 md:gap-16 lg:gap-20">
+        {/* 4. Two Interactive CD Jewel Cases with exact 60px gap from the tiles */}
+        <div className="w-full flex flex-col md:flex-row items-center justify-center gap-10 sm:gap-14 md:gap-16 lg:gap-20 mt-[60px] mb-[60px]">
           {/* ========================================================= */}
           {/* CASE 1: Graphic Design                                    */}
           {/* ========================================================= */}

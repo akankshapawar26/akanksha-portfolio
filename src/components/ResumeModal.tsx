@@ -44,6 +44,8 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
     const link = document.createElement('a');
     link.href = '/assets/Akanksha_Pawar_Resume.pdf';
     link.download = 'Akanksha_Pawar_Resume.pdf';
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -320,20 +322,20 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                     {/* ----------------- RIGHT SPREAD DOCUMENT ----------------- */}
                     <div className="w-[48%] h-[92%] flex items-center justify-center pr-1 sm:pr-2">
                       <div
-                        className="w-full h-full bg-[#FFFFFF] rounded-[13px] sm:rounded-[15px] p-3 sm:p-4 overflow-hidden flex flex-col justify-between text-[#292827]"
+                        className="w-full h-full bg-[#FFFFFF] rounded-[13px] sm:rounded-[15px] p-3 sm:p-4 overflow-hidden flex flex-col text-[#292827]"
                         style={{
                           boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.2)',
                         }}
                       >
-                        <div className="flex flex-col justify-between h-full gap-2 sm:gap-2.5">
+                        <div className="flex flex-col gap-1.5 sm:gap-2">
                           {/* Work Experience Section */}
                           <div>
-                            <h2 className="text-[8.5px] sm:text-[9.5px] font-bold uppercase tracking-widest text-[#754640] border-b border-[#292827]/15 pb-1 mb-1.5 sm:mb-2 font-sans flex items-center gap-1.5">
+                            <h2 className="text-[8.5px] sm:text-[9.5px] font-bold uppercase tracking-widest text-[#754640] border-b border-[#292827]/15 pb-0.5 mb-1 sm:mb-1.5 font-sans flex items-center gap-1.5">
                               <Briefcase className="w-2.5 h-2.5" />
                               WORK EXPERIENCE
                             </h2>
 
-                            <div className="space-y-1.5 sm:space-y-2">
+                            <div className="space-y-1 sm:space-y-1.5">
                               {/* Role 1 */}
                               <div>
                                 <div className="flex justify-between items-baseline">
@@ -371,7 +373,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
                           {/* Selected Academic Projects */}
                           <div className="border-t border-dashed border-[#292827]/15 pt-1.5 sm:pt-2">
-                            <h2 className="text-[8.5px] sm:text-[9.5px] font-bold uppercase tracking-widest text-[#754640] border-b border-[#292827]/15 pb-1 mb-1 sm:mb-1.5 font-sans flex items-center gap-1.5">
+                            <h2 className="text-[8.5px] sm:text-[9.5px] font-bold uppercase tracking-widest text-[#754640] border-b border-[#292827]/15 pb-0.5 mb-1 sm:mb-1.5 font-sans flex items-center gap-1.5">
                               <FolderGit2 className="w-2.5 h-2.5" />
                               ACADEMIC PROJECTS
                             </h2>
@@ -395,21 +397,6 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                                 </p>
                               </div>
                             </div>
-                          </div>
-
-                          {/* Download CTA Callout Banner */}
-                          <div className="mt-auto pt-1.5 sm:pt-2 border-t border-[#292827]/10 flex items-center justify-between gap-1.5 sm:gap-2">
-                            <div className="text-[8px] sm:text-[9px] text-[#71717A] leading-tight">
-                              <span>Need complete metrics & case studies?</span>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={handleDownloadPDF}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[#3377F8] hover:bg-[#2566E8] text-white text-[8.5px] sm:text-[9.5px] font-semibold transition-all active:scale-95 cursor-pointer shadow-sm hover:shadow-md"
-                            >
-                              <Download className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                              <span>Download Full PDF</span>
-                            </button>
                           </div>
                         </div>
                       </div>

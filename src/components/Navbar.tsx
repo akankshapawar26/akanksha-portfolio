@@ -3,15 +3,31 @@ import React, { useState, useEffect } from 'react';
 interface NavbarProps {
   onNavClick?: (item: string) => void;
   activeItem?: string;
+  isReady?: boolean;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onNavClick }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onNavClick, isReady = true }) => {
   const [hovered, setHovered] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasEntered, setHasEntered] = useState(!isReady);
   const [lastScrollY, setLastScrollY] = useState(0);
 
+  // Initial Entrance Animation: "and then lastly the navbar will come down."
   useEffect(() => {
+    if (!hasEntered && isReady) {
+      const timer = setTimeout(() => {
+        setHasEntered(true);
+        setIsVisible(true);
+      }, 1900); // Waits for tiles to settle and quote text to emerge
+      return () => clearTimeout(timer);
+    } else if (isReady && hasEntered) {
+      setIsVisible(true);
+    }
+  }, [isReady, hasEntered]);
+
+  useEffect(() => {
+    if (!hasEntered) return;
     let ticking = false;
 
     const handleScroll = () => {
@@ -39,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavClick }) => {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, [lastScrollY, hasEntered]);
 
   const navLinks = [
     { label: 'Work', id: 'work', href: '#work' },
@@ -51,8 +67,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavClick }) => {
     <>
       {/* 1. DESKTOP / TABLET NAVIGATION: Smart Pop-Up Glassmorphic Pill */}
       <header
-        className={`hidden md:flex fixed top-0 left-0 right-0 z-50 w-full justify-center pt-3 sm:pt-4 pb-2 pointer-events-none transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+        className={`hidden md:flex fixed top-0 left-0 right-0 z-50 w-full justify-center pt-3 sm:pt-4 pb-2 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          hasEntered && isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
         }`}
       >
         <nav
@@ -138,8 +154,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavClick }) => {
 
       {/* 2. MOBILE NAVIGATION: Smart Pop-Up Header Bar */}
       <div
-        className={`md:hidden fixed top-0 left-0 right-0 z-50 w-full pointer-events-none transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isVisible || mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+        className={`md:hidden fixed top-0 left-0 right-0 z-50 w-full pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          hasEntered && (isVisible || mobileMenuOpen) ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
         }`}
       >
         <header className="w-full flex items-center justify-between px-5 pt-3 pb-2.5 bg-[#FCFAEF]/90 backdrop-blur-md border-b border-[#EBE4D5]/60 pointer-events-auto shadow-xs">

@@ -15,6 +15,7 @@ import { IllustrationPage } from './components/IllustrationPage';
 
 export default function App() {
   const [showLoading, setShowLoading] = useState(true);
+  const [isPageReady, setIsPageReady] = useState(false);
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [currentView, setCurrentView] = useState<'home' | 'graphic-design' | 'illustration'>('home');
@@ -70,6 +71,7 @@ export default function App() {
 
   const handleBackToHome = () => {
     setCurrentView('home');
+    setIsPageReady(true);
     if (window.location.hash === '#graphic-design' || window.location.hash === '#illustration') {
       window.history.pushState(null, '', window.location.pathname);
     }
@@ -81,7 +83,7 @@ export default function App() {
     return (
       <div className="relative min-h-screen w-full bg-[#FFFFE1] text-[#323131] overflow-x-hidden flex flex-col items-center">
         {/* Floating Navbar on Graphic Design Page */}
-        <Navbar onNavClick={handleNavClick} />
+        <Navbar onNavClick={handleNavClick} isReady={true} />
         <GraphicDesignPage onBack={handleBackToHome} />
 
         {/* Interactive Modals */}
@@ -98,7 +100,7 @@ export default function App() {
     return (
       <div className="relative min-h-screen w-full bg-[#EAE2D2] text-[#292827] overflow-x-hidden flex flex-col items-center">
         {/* Floating Navbar on Illustration Page */}
-        <Navbar onNavClick={handleNavClick} />
+        <Navbar onNavClick={handleNavClick} isReady={true} />
         <IllustrationPage onBack={handleBackToHome} />
 
         {/* Interactive Modals */}
@@ -114,14 +116,20 @@ export default function App() {
     <div className="relative min-h-screen w-full bg-[#FCFAEF] text-[#292827] overflow-x-hidden selection:bg-[#C99492]/25 selection:text-[#754640] flex flex-col items-center">
       {/* 0. Introductory 4-Tile Loading Screen (runs once only on initial load) */}
       {showLoading && (
-        <LoadingScreen duration={2600} onComplete={() => setShowLoading(false)} />
+        <LoadingScreen
+          duration={2600}
+          onComplete={() => {
+            setShowLoading(false);
+            setIsPageReady(true);
+          }}
+        />
       )}
 
       {/* 1. Centered Floating Navigation Bar */}
-      <Navbar onNavClick={handleNavClick} />
+      <Navbar onNavClick={handleNavClick} isReady={isPageReady} />
 
       {/* 2. Hero / Introduction */}
-      <Hero />
+      <Hero isReady={isPageReady} />
 
       {/* 3. Category Ticker */}
       <CategoryTicker />

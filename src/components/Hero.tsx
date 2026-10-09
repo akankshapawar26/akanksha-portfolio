@@ -5,6 +5,104 @@ import { PatternType } from './TilePatterns';
 
 const fairyEase = [0.16, 1, 0.3, 1] as const;
 
+// Directional fly-in offsets so each tile enters from a distinct angle
+const getDesktopTileEntrance = (id: string, index: number) => {
+  if (id === 'd-tl-1') return { x: -280, y: -280, rotate: -30 };
+  if (id === 'd-ur-0-5') return { x: -160, y: -300, rotate: 20 };
+  if (id === 'd-ur-0-3') return { x: -40, y: -320, rotate: -15 };
+  if (id === 'd-ur-0-2') return { x: 80, y: -320, rotate: 25 };
+  if (id === 'd-ur-0-1') return { x: 200, y: -280, rotate: -20 };
+  if (id === 'd-ur-0-0') return { x: 300, y: -240, rotate: 35 };
+  if (id === 'd-ur-1-4') return { x: -100, y: -260, rotate: -25 };
+  if (id === 'd-ur-1-3') return { x: 40, y: -260, rotate: 20 };
+  if (id === 'd-ur-1-1') return { x: 260, y: -120, rotate: -25 };
+  if (id === 'd-ur-1-0') return { x: 320, y: -40, rotate: 20 };
+  if (id === 'd-ur-2-0') return { x: 340, y: 80, rotate: -20 };
+  if (id === 'd-ml-1') return { x: -340, y: -40, rotate: -30 };
+  if (id === 'd-ml-2') return { x: -340, y: 80, rotate: 25 };
+  if (id === 'd-bl-0-1') return { x: -220, y: 280, rotate: 20 };
+  if (id === 'd-bl-0-2') return { x: -100, y: 320, rotate: -15 };
+  if (id === 'd-bl-0-3') return { x: 40, y: 340, rotate: 20 };
+  if (id === 'd-bl-0-4') return { x: 160, y: 320, rotate: -25 };
+  if (id === 'd-bl-1-0') return { x: -300, y: 320, rotate: -25 };
+  if (id === 'd-bl-1-1') return { x: -180, y: 340, rotate: 20 };
+  if (id === 'd-bl-1-3') return { x: 60, y: 360, rotate: -20 };
+  if (id === 'd-br-0-0') return { x: 320, y: 240, rotate: 25 };
+  if (id === 'd-br-1-1') return { x: 240, y: 340, rotate: -20 };
+  if (id === 'd-br-1-0') return { x: 340, y: 320, rotate: 30 };
+  return { x: index % 2 === 0 ? -200 : 200, y: -200, rotate: 15 };
+};
+
+const getTabletTileEntrance = (id: string, index: number) => {
+  if (id === 'tab-tl-1') return { x: -240, y: -240, rotate: -25 };
+  if (id.startsWith('tab-ur-0')) {
+    const offsets = [
+      { x: 260, y: -220, rotate: 25 },
+      { x: 180, y: -260, rotate: -20 },
+      { x: 80, y: -280, rotate: 18 },
+      { x: -40, y: -280, rotate: -15 },
+      { x: -140, y: -240, rotate: 20 },
+    ];
+    return offsets[index % offsets.length];
+  }
+  if (id.startsWith('tab-ur-1')) {
+    const offsets = [
+      { x: 260, y: -40, rotate: -20 },
+      { x: 200, y: -120, rotate: 25 },
+      { x: 60, y: -220, rotate: -15 },
+      { x: -80, y: -200, rotate: 18 },
+    ];
+    return offsets[index % offsets.length];
+  }
+  if (id.startsWith('tab-ur-2')) return { x: 280, y: 40, rotate: -20 };
+  if (id.startsWith('tab-ml')) return index % 2 === 0 ? { x: -260, y: -40, rotate: -25 } : { x: -260, y: 60, rotate: 20 };
+  if (id.startsWith('tab-bl')) {
+    const offsets = [
+      { x: -180, y: 260, rotate: 20 },
+      { x: -100, y: 280, rotate: -18 },
+      { x: 0, y: 280, rotate: 15 },
+      { x: 100, y: 260, rotate: -22 },
+      { x: -240, y: 280, rotate: -20 },
+      { x: -140, y: 300, rotate: 25 },
+      { x: 40, y: 300, rotate: -15 },
+    ];
+    return offsets[index % offsets.length];
+  }
+  if (id.startsWith('tab-br')) return { x: 260, y: 260, rotate: index % 2 === 0 ? 25 : -20 };
+  return { x: 200, y: -200, rotate: 15 };
+};
+
+const getMobileTileEntrance = (index: number, isTop: boolean) => {
+  if (isTop) {
+    const offsets = [
+      { x: -180, y: -200, rotate: -25 },
+      { x: -60, y: -240, rotate: 18 },
+      { x: 40, y: -240, rotate: -15 },
+      { x: 140, y: -220, rotate: 22 },
+      { x: 220, y: -180, rotate: -20 },
+      { x: -120, y: -160, rotate: 15 },
+      { x: 0, y: -200, rotate: -18 },
+      { x: 160, y: -120, rotate: 25 },
+      { x: 220, y: -60, rotate: -15 },
+      { x: 220, y: 40, rotate: 20 },
+    ];
+    return offsets[index % offsets.length];
+  } else {
+    const offsets = [
+      { x: -200, y: 20, rotate: -25 },
+      { x: -200, y: 100, rotate: 20 },
+      { x: -140, y: 220, rotate: -18 },
+      { x: -40, y: 240, rotate: 15 },
+      { x: 60, y: 240, rotate: -20 },
+      { x: 160, y: 220, rotate: 25 },
+      { x: -220, y: 220, rotate: 20 },
+      { x: -100, y: 240, rotate: -15 },
+      { x: 80, y: 240, rotate: 18 },
+    ];
+    return offsets[index % offsets.length];
+  }
+};
+
 // =========================================================================
 // 1. MOBILE TILE ARRANGEMENT (Frame 406.png Replica)
 // Standard Mobile Tile Size: 42px
@@ -169,7 +267,11 @@ const DESKTOP_TILES: DesktopTileSpec[] = [
   { id: 'd-br-1-0', type: 'pink-cream-tulips-navy', top: 560 + DESK_STEP, right: 16 + 0 * DESK_STEP },
 ];
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  isReady?: boolean;
+}
+
+export const Hero: React.FC<HeroProps> = ({ isReady = true }) => {
   const [viewportWidth, setViewportWidth] = useState<number>(
     typeof window !== 'undefined' ? window.innerWidth : 1440
   );
@@ -206,17 +308,35 @@ export const Hero: React.FC = () => {
           style={{ height: '740px' }}
         >
           {/* Top Decorative Tile Cluster */}
-          {MOBILE_TOP_TILES.map((t) => {
+          {MOBILE_TOP_TILES.map((t, index) => {
             const posX = mobileStartX + t.col * MOBILE_COL_STEP;
             const posY = 6 + t.row * MOBILE_COL_STEP;
+            const entrance = getMobileTileEntrance(index, true);
 
             return (
-              <div
+              <motion.div
                 key={t.id}
                 className="absolute transition-transform duration-200 hover:scale-105 active:scale-95"
                 style={{
                   left: `${posX}px`,
                   top: `${posY}px`,
+                }}
+                initial={{
+                  x: entrance.x,
+                  y: entrance.y,
+                  rotate: entrance.rotate,
+                  opacity: 0,
+                  scale: 0.65,
+                }}
+                animate={
+                  isReady
+                    ? { x: 0, y: 0, rotate: 0, opacity: 1, scale: 1 }
+                    : { x: entrance.x, y: entrance.y, rotate: entrance.rotate, opacity: 0, scale: 0.65 }
+                }
+                transition={{
+                  duration: 1.1,
+                  delay: 0.05 + index * 0.035,
+                  ease: fairyEase,
                 }}
               >
                 <DecorativeTile
@@ -229,7 +349,7 @@ export const Hero: React.FC = () => {
                   size={MOBILE_TILE_SIZE}
                   borderRadius={5}
                 />
-              </div>
+              </motion.div>
             );
           })}
 
@@ -246,25 +366,37 @@ export const Hero: React.FC = () => {
             <div className="flex flex-col text-left">
               <motion.span
                 className="font-sans-ui text-[#555555] font-normal text-[17px] leading-snug tracking-[-0.01em]"
-                initial={{ opacity: 0, x: -14, filter: 'blur(5px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.9, delay: 0, ease: fairyEase }}
+                initial={{ opacity: 0, x: -35, filter: 'blur(8px)' }}
+                animate={
+                  isReady
+                    ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                    : { opacity: 0, x: -35, filter: 'blur(8px)' }
+                }
+                transition={{ duration: 1.2, delay: 0.35, ease: fairyEase }}
               >
                 Hello, I'm
               </motion.span>
               <motion.h1
                 className="font-sans-ui text-[#754640] font-black text-[28px] tracking-[-0.03em] leading-[1.08] mt-0.5"
-                initial={{ opacity: 0, x: -18, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 1.0, delay: 0.15, ease: fairyEase }}
+                initial={{ opacity: 0, x: -45, filter: 'blur(10px)' }}
+                animate={
+                  isReady
+                    ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                    : { opacity: 0, x: -45, filter: 'blur(10px)' }
+                }
+                transition={{ duration: 1.25, delay: 0.55, ease: fairyEase }}
               >
                 Akanksha Pawar
               </motion.h1>
               <motion.h2
                 className="font-sans-ui text-[#C99492] font-bold text-[22px] tracking-[-0.02em] leading-[1.08] mt-0.5"
-                initial={{ opacity: 0, x: -18, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 1.0, delay: 0.28, ease: fairyEase }}
+                initial={{ opacity: 0, x: -45, filter: 'blur(10px)' }}
+                animate={
+                  isReady
+                    ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                    : { opacity: 0, x: -45, filter: 'blur(10px)' }
+                }
+                transition={{ duration: 1.25, delay: 0.75, ease: fairyEase }}
               >
                 UX Designer
               </motion.h2>
@@ -275,33 +407,49 @@ export const Hero: React.FC = () => {
               <h3 className="font-editorial text-[#292827] text-[33px] font-bold tracking-[-0.02em] leading-[1.18] text-left">
                 <motion.span
                   className="block whitespace-nowrap"
-                  initial={{ opacity: 0, x: -30, filter: 'blur(8px)' }}
-                  animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.1, delay: 0.4, ease: fairyEase }}
+                  initial={{ opacity: 0, x: -50, filter: 'blur(12px)' }}
+                  animate={
+                    isReady
+                      ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                      : { opacity: 0, x: -50, filter: 'blur(12px)' }
+                  }
+                  transition={{ duration: 1.3, delay: 1.05, ease: fairyEase }}
                 >
                   Where research
                 </motion.span>
                 <motion.span
                   className="block whitespace-nowrap"
-                  initial={{ opacity: 0, x: -30, filter: 'blur(8px)' }}
-                  animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.1, delay: 0.6, ease: fairyEase }}
+                  initial={{ opacity: 0, x: -50, filter: 'blur(12px)' }}
+                  animate={
+                    isReady
+                      ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                      : { opacity: 0, x: -50, filter: 'blur(12px)' }
+                  }
+                  transition={{ duration: 1.3, delay: 1.25, ease: fairyEase }}
                 >
                   meets creativity,
                 </motion.span>
                 <motion.span
                   className="block whitespace-nowrap"
-                  initial={{ opacity: 0, x: -30, filter: 'blur(8px)' }}
-                  animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.1, delay: 0.8, ease: fairyEase }}
+                  initial={{ opacity: 0, x: -50, filter: 'blur(12px)' }}
+                  animate={
+                    isReady
+                      ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                      : { opacity: 0, x: -50, filter: 'blur(12px)' }
+                  }
+                  transition={{ duration: 1.3, delay: 1.45, ease: fairyEase }}
                 >
                   and ideas become
                 </motion.span>
                 <motion.span
                   className="block whitespace-nowrap"
-                  initial={{ opacity: 0, x: -30, filter: 'blur(8px)' }}
-                  animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.1, delay: 1.0, ease: fairyEase }}
+                  initial={{ opacity: 0, x: -50, filter: 'blur(12px)' }}
+                  animate={
+                    isReady
+                      ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                      : { opacity: 0, x: -50, filter: 'blur(12px)' }
+                  }
+                  transition={{ duration: 1.3, delay: 1.65, ease: fairyEase }}
                 >
                   experiences.
                 </motion.span>
@@ -310,17 +458,35 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Mobile Lower Decorative Tile Cluster */}
-          {MOBILE_LOWER_TILES.map((t) => {
+          {MOBILE_LOWER_TILES.map((t, index) => {
             const posX = mobileStartX + t.col * MOBILE_COL_STEP;
             const posY = 500 + t.row * MOBILE_COL_STEP;
+            const entrance = getMobileTileEntrance(index, false);
 
             return (
-              <div
+              <motion.div
                 key={t.id}
                 className="absolute transition-transform duration-200 hover:scale-105 active:scale-95"
                 style={{
                   left: `${posX}px`,
                   top: `${posY}px`,
+                }}
+                initial={{
+                  x: entrance.x,
+                  y: entrance.y,
+                  rotate: entrance.rotate,
+                  opacity: 0,
+                  scale: 0.65,
+                }}
+                animate={
+                  isReady
+                    ? { x: 0, y: 0, rotate: 0, opacity: 1, scale: 1 }
+                    : { x: entrance.x, y: entrance.y, rotate: entrance.rotate, opacity: 0, scale: 0.65 }
+                }
+                transition={{
+                  duration: 1.1,
+                  delay: 0.15 + index * 0.035,
+                  ease: fairyEase,
                 }}
               >
                 <DecorativeTile
@@ -333,7 +499,7 @@ export const Hero: React.FC = () => {
                   size={MOBILE_TILE_SIZE}
                   borderRadius={5}
                 />
-              </div>
+              </motion.div>
             );
           })}
         </div>
@@ -348,15 +514,37 @@ export const Hero: React.FC = () => {
           style={{ height: '720px' }}
         >
           {/* Tablet Perimeter Framing Tiles */}
-          {TABLET_TILES.map((tile) => {
+          {TABLET_TILES.map((tile, index) => {
             const style: React.CSSProperties = {
               top: `${tile.top}px`,
             };
             if (tile.left !== undefined) style.left = `${tile.left}px`;
             if (tile.right !== undefined) style.right = `${tile.right}px`;
+            const entrance = getTabletTileEntrance(tile.id, index);
 
             return (
-              <div key={tile.id} className="absolute" style={style}>
+              <motion.div
+                key={tile.id}
+                className="absolute"
+                style={style}
+                initial={{
+                  x: entrance.x,
+                  y: entrance.y,
+                  rotate: entrance.rotate,
+                  opacity: 0,
+                  scale: 0.65,
+                }}
+                animate={
+                  isReady
+                    ? { x: 0, y: 0, rotate: 0, opacity: 1, scale: 1 }
+                    : { x: entrance.x, y: entrance.y, rotate: entrance.rotate, opacity: 0, scale: 0.65 }
+                }
+                transition={{
+                  duration: 1.15,
+                  delay: 0.05 + index * 0.035,
+                  ease: fairyEase,
+                }}
+              >
                 <DecorativeTile
                   tile={{
                     id: tile.id,
@@ -367,7 +555,7 @@ export const Hero: React.FC = () => {
                   size={TABLET_TILE_SIZE}
                   borderRadius={6}
                 />
-              </div>
+              </motion.div>
             );
           })}
 
@@ -384,25 +572,37 @@ export const Hero: React.FC = () => {
             <div className="flex flex-col text-left">
               <motion.span
                 className="font-sans-ui text-[#555555] font-normal text-[19px] leading-snug tracking-[-0.01em]"
-                initial={{ opacity: 0, x: -14, filter: 'blur(5px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.9, delay: 0, ease: fairyEase }}
+                initial={{ opacity: 0, x: -40, filter: 'blur(8px)' }}
+                animate={
+                  isReady
+                    ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                    : { opacity: 0, x: -40, filter: 'blur(8px)' }
+                }
+                transition={{ duration: 1.25, delay: 0.35, ease: fairyEase }}
               >
                 Hello, I'm
               </motion.span>
               <motion.h1
                 className="font-sans-ui text-[#754640] font-black text-[34px] tracking-[-0.025em] leading-[1.08] mt-1"
-                initial={{ opacity: 0, x: -18, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 1.0, delay: 0.15, ease: fairyEase }}
+                initial={{ opacity: 0, x: -50, filter: 'blur(10px)' }}
+                animate={
+                  isReady
+                    ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                    : { opacity: 0, x: -50, filter: 'blur(10px)' }
+                }
+                transition={{ duration: 1.3, delay: 0.55, ease: fairyEase }}
               >
                 Akanksha Pawar
               </motion.h1>
               <motion.h2
                 className="font-sans-ui text-[#C99492] font-bold text-[26px] tracking-[-0.02em] leading-[1.08] mt-1"
-                initial={{ opacity: 0, x: -18, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 1.0, delay: 0.28, ease: fairyEase }}
+                initial={{ opacity: 0, x: -50, filter: 'blur(10px)' }}
+                animate={
+                  isReady
+                    ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                    : { opacity: 0, x: -50, filter: 'blur(10px)' }
+                }
+                transition={{ duration: 1.3, delay: 0.75, ease: fairyEase }}
               >
                 UX Designer
               </motion.h2>
@@ -413,17 +613,25 @@ export const Hero: React.FC = () => {
               <h3 className="font-editorial text-[#292827] text-[40px] font-bold leading-[1.16] tracking-[-0.02em] text-left">
                 <motion.span
                   className="block whitespace-nowrap"
-                  initial={{ opacity: 0, x: -40, filter: 'blur(10px)' }}
-                  animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.3, delay: 0.4, ease: fairyEase }}
+                  initial={{ opacity: 0, x: -60, filter: 'blur(12px)' }}
+                  animate={
+                    isReady
+                      ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                      : { opacity: 0, x: -60, filter: 'blur(12px)' }
+                  }
+                  transition={{ duration: 1.4, delay: 1.05, ease: fairyEase }}
                 >
                   Where research meets creativity,
                 </motion.span>
                 <motion.span
                   className="block whitespace-nowrap"
-                  initial={{ opacity: 0, x: -40, filter: 'blur(10px)' }}
-                  animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.3, delay: 0.75, ease: fairyEase }}
+                  initial={{ opacity: 0, x: -60, filter: 'blur(12px)' }}
+                  animate={
+                    isReady
+                      ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                      : { opacity: 0, x: -60, filter: 'blur(12px)' }
+                  }
+                  transition={{ duration: 1.4, delay: 1.35, ease: fairyEase }}
                 >
                   and ideas become experiences.
                 </motion.span>
@@ -443,7 +651,7 @@ export const Hero: React.FC = () => {
           style={{ height: '780px' }}
         >
           {/* Desktop Perimeter Tiles */}
-          {DESKTOP_TILES.map((tile) => {
+          {DESKTOP_TILES.map((tile, index) => {
             if (tile.hideOnNarrowDesktop && viewportWidth < 1260) {
               return null;
             }
@@ -458,8 +666,31 @@ export const Hero: React.FC = () => {
               style.right = `${tile.right}px`;
             }
 
+            const entrance = getDesktopTileEntrance(tile.id, index);
+
             return (
-              <div key={tile.id} className="absolute" style={style}>
+              <motion.div
+                key={tile.id}
+                className="absolute"
+                style={style}
+                initial={{
+                  x: entrance.x,
+                  y: entrance.y,
+                  rotate: entrance.rotate,
+                  opacity: 0,
+                  scale: 0.65,
+                }}
+                animate={
+                  isReady
+                    ? { x: 0, y: 0, rotate: 0, opacity: 1, scale: 1 }
+                    : { x: entrance.x, y: entrance.y, rotate: entrance.rotate, opacity: 0, scale: 0.65 }
+                }
+                transition={{
+                  duration: 1.15,
+                  delay: 0.05 + index * 0.035,
+                  ease: fairyEase,
+                }}
+              >
                 <DecorativeTile
                   tile={{
                     id: tile.id,
@@ -470,7 +701,7 @@ export const Hero: React.FC = () => {
                   size={DESKTOP_TILE_SIZE}
                   borderRadius={7}
                 />
-              </div>
+              </motion.div>
             );
           })}
 
@@ -487,25 +718,37 @@ export const Hero: React.FC = () => {
             <div className="flex flex-col text-left">
               <motion.span
                 className="font-sans-ui text-[#555555] text-[20px] font-normal leading-snug tracking-[-0.01em]"
-                initial={{ opacity: 0, x: -14, filter: 'blur(5px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.9, delay: 0, ease: fairyEase }}
+                initial={{ opacity: 0, x: -45, filter: 'blur(8px)' }}
+                animate={
+                  isReady
+                    ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                    : { opacity: 0, x: -45, filter: 'blur(8px)' }
+                }
+                transition={{ duration: 1.25, delay: 0.35, ease: fairyEase }}
               >
                 Hello, I'm
               </motion.span>
               <motion.h1
                 className="font-sans-ui text-[#754640] text-[38px] font-black tracking-[-0.025em] leading-[1.08] mt-1"
-                initial={{ opacity: 0, x: -18, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 1.0, delay: 0.15, ease: fairyEase }}
+                initial={{ opacity: 0, x: -55, filter: 'blur(10px)' }}
+                animate={
+                  isReady
+                    ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                    : { opacity: 0, x: -55, filter: 'blur(10px)' }
+                }
+                transition={{ duration: 1.3, delay: 0.55, ease: fairyEase }}
               >
                 Akanksha Pawar
               </motion.h1>
               <motion.h2
                 className="font-sans-ui text-[#C99492] text-[30px] font-bold tracking-[-0.02em] leading-[1.08] mt-1"
-                initial={{ opacity: 0, x: -18, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 1.0, delay: 0.28, ease: fairyEase }}
+                initial={{ opacity: 0, x: -55, filter: 'blur(10px)' }}
+                animate={
+                  isReady
+                    ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                    : { opacity: 0, x: -55, filter: 'blur(10px)' }
+                }
+                transition={{ duration: 1.3, delay: 0.75, ease: fairyEase }}
               >
                 UX Designer
               </motion.h2>
@@ -516,17 +759,25 @@ export const Hero: React.FC = () => {
               <h3 className="font-editorial text-[#292827] text-[46px] lg:text-[50px] font-bold leading-[1.14] tracking-[-0.02em] text-left">
                 <motion.span
                   className="block whitespace-nowrap"
-                  initial={{ opacity: 0, x: -40, filter: 'blur(10px)' }}
-                  animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.3, delay: 0.4, ease: fairyEase }}
+                  initial={{ opacity: 0, x: -65, filter: 'blur(12px)' }}
+                  animate={
+                    isReady
+                      ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                      : { opacity: 0, x: -65, filter: 'blur(12px)' }
+                  }
+                  transition={{ duration: 1.45, delay: 1.05, ease: fairyEase }}
                 >
                   Where research meets creativity,
                 </motion.span>
                 <motion.span
                   className="block whitespace-nowrap"
-                  initial={{ opacity: 0, x: -40, filter: 'blur(10px)' }}
-                  animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.3, delay: 0.75, ease: fairyEase }}
+                  initial={{ opacity: 0, x: -65, filter: 'blur(12px)' }}
+                  animate={
+                    isReady
+                      ? { opacity: 1, x: 0, filter: 'blur(0px)' }
+                      : { opacity: 0, x: -65, filter: 'blur(12px)' }
+                  }
+                  transition={{ duration: 1.45, delay: 1.35, ease: fairyEase }}
                 >
                   and ideas become experiences.
                 </motion.span>

@@ -652,7 +652,7 @@ export const GraphicDesignPage: React.FC<GraphicDesignPageProps> = ({ onBack }) 
       {/* 1. HERO POSTER SECTION                                                   */}
       {/* ========================================================================= */}
       <section
-        className="relative w-full max-w-[1280px] mx-auto min-h-[300px] sm:min-h-[340px] md:min-h-[370px] flex flex-col justify-end overflow-hidden pt-16 sm:pt-20"
+        className="relative w-full max-w-[1280px] mx-auto min-h-[330px] sm:min-h-[370px] md:min-h-[400px] flex flex-col justify-end overflow-hidden pt-16 sm:pt-20"
         style={{
           backgroundColor: '#FFFFE1',
         }}
